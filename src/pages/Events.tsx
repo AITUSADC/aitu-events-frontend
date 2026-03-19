@@ -162,7 +162,7 @@ const EventCard = ({ event }: { event: typeof events[0] }) => (
     <button
       className={`w-full py-3.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${
         event.registered
-          ? "bg-blue-500 hover:bg-blue-600 text-white shadow-md shadow-blue-200"
+          ? "bg-primary hover:bg-blue-600 text-white shadow-md shadow-blue-200"
           : "bg-gray-100 hover:bg-gray-200 text-gray-500"
       }`}
     >
@@ -172,7 +172,7 @@ const EventCard = ({ event }: { event: typeof events[0] }) => (
 );
 
 const EventsPage = () => {
-  const [activeMonth, setActiveMonth] = useState("Apr");
+  const [activeMonth, setActiveMonth] = useState("Jan");
   const [search, setSearch] = useState("");
 
   return (
