@@ -3,7 +3,7 @@
 body { 
   background-image: url('./assets/bg.png');
   background-size: cover;
-  
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 /* Add custom color tailwind */
