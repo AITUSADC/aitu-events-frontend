@@ -6,6 +6,9 @@ body {
   background-color: rgba(0, 0, 0, 0.02);
 }
 
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
 /* Add custom color tailwind */
 @theme {
   --color-primary: #0088FF;

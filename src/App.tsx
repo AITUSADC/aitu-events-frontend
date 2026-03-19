@@ -1,5 +1,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router'; 
 import Authorization from './pages/Authorization';
+import Events from './pages/Events';
+import Home from './pages/Home';
 
 function App() {
 
@@ -7,8 +9,8 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
           <Route path="/auth" element={<Authorization />} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </>
