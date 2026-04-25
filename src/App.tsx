@@ -1,6 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router'; 
 import Authorization from './pages/Authorization';
-import Events from './pages/Events';
 import Home from './pages/Home';
 
 function App() {
