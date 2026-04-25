@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { ClockIcon, PinIcon, SearchIcon } from "../components/icons";
 
+
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const events = [
@@ -201,6 +202,7 @@ const EventsPage = () => {
           <EventCard key={event.id} event={event} />
         ))}
       </div>
+      
     </div>
   );
 };

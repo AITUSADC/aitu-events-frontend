@@ -1,14 +1,20 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Authorization = () => {
   const [name, setName] = useState("");
   const [barcode, setBarcode] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     if (!name || !barcode) {
       setError("Пожалуйста, заполните все поля");
       return;
+    }else{
+      navigate("/profile-confirm", {
+      state: { name, barcode }
+    });
     }
   }
 
