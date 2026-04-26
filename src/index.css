@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-body { 
+body {
+  font-family: 'Lato', sans-serif;
   background-image: url('./assets/bg.png');
   background-size: cover;
   background-color: rgba(0, 0, 0, 0.02);

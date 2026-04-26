@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { ClockIcon, PinIcon, SearchIcon } from "../components/icons";
-
+import type { Event } from "../types";
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const events = [
+const MOCK_EVENTS: Event[] = [
   {
     id: 1,
-    title: "Event",
+    title: "День открытых дверей",
     date: "24 марта в 16:00",
     location: "AITU Hall",
     description: "День открытых дверей Astana IT University",
@@ -15,24 +15,24 @@ const events = [
   },
   {
     id: 2,
-    title: "Event",
-    date: "24 марта в 16:00",
+    title: "Hackathon AITU",
+    date: "10 апреля в 09:00",
     location: "AITU Hall",
-    description: "День открытых дверей Astana IT University",
+    description: "Ежегодный хакатон Astana IT University",
     registered: false,
   },
   {
     id: 3,
-    title: "Event",
-    date: "24 марта в 16:00",
+    title: "Tech Talk",
+    date: "20 апреля в 18:00",
     location: "AITU Hall",
-    description: "День открытых дверей Astana IT University",
+    description: "Лекции от ведущих IT-специалистов",
     registered: false,
   },
 ];
 
 const COPIES = 5;
-const VISIBLE = 7; // how many months shown at once
+const VISIBLE = 7;
 
 const MonthSelector = ({
   activeMonth,
@@ -50,7 +50,6 @@ const MonthSelector = ({
   const totalItems = repeated.length;
   const middleCopyOffset = Math.floor(COPIES / 2) * months.length;
 
-  // Measure parent width and derive itemWidth so exactly VISIBLE items fit
   useEffect(() => {
     const el = wrapperRef.current;
     if (!el) return;
@@ -71,14 +70,11 @@ const MonthSelector = ({
     [itemWidth]
   );
 
-  // Jump to center once itemWidth is first calculated
   useEffect(() => {
     if (itemWidth === 0) return;
-    const idx = middleCopyOffset + months.indexOf(activeMonth);
-    scrollToIndex(idx, false);
+    scrollToIndex(middleCopyOffset + months.indexOf(activeMonth), false);
   }, [itemWidth]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Re-center when activeMonth changes externally
   useEffect(() => {
     if (isScrolling.current || itemWidth === 0) return;
     const el = scrollRef.current;
@@ -115,11 +111,6 @@ const MonthSelector = ({
     }
   };
 
-  const handleClick = (month: string, idx: number) => {
-    setActiveMonth(month);
-    scrollToIndex(idx, true);
-  };
-
   return (
     <div ref={wrapperRef} className="w-full mb-5">
       <div
@@ -132,11 +123,11 @@ const MonthSelector = ({
           repeated.map((month, i) => (
             <button
               key={i}
-              onClick={() => handleClick(month, i)}
+              onClick={() => { setActiveMonth(month); scrollToIndex(i, true); }}
               style={{ minWidth: itemWidth, scrollSnapAlign: "center" }}
               className={`shrink-0 h-10 transition-all duration-150 text-center text-base ${
                 month === activeMonth
-                  ? "text-gray-900 font-bold transform scale-120"
+                  ? "text-gray-900 font-bold scale-125"
                   : "text-gray-400 font-medium hover:text-gray-600"
               }`}
             >
@@ -148,7 +139,7 @@ const MonthSelector = ({
   );
 };
 
-const EventCard = ({ event }: { event: typeof events[0] }) => (
+const EventCard = ({ event }: { event: Event }) => (
   <div className="bg-white rounded-2xl p-4 shadow-sm">
     <h3 className="text-lg font-bold text-gray-900 mb-2">{event.title}</h3>
     <div className="flex items-center gap-1.5 text-gray-500 text-sm mb-1">
@@ -163,11 +154,11 @@ const EventCard = ({ event }: { event: typeof events[0] }) => (
     <button
       className={`w-full py-3.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${
         event.registered
-          ? "bg-primary hover:bg-blue-600 text-white shadow-md shadow-blue-200"
-          : "bg-gray-100 hover:bg-gray-200 text-gray-500"
+          ? "bg-gray-100 hover:bg-gray-200 text-gray-500" 
+          : "bg-primary hover:bg-blue-600 text-white shadow-md shadow-blue-200"
       }`}
     >
-      Зарегистрироваться
+      {event.registered ? "Вы зарегистрированы" : "Зарегистрироваться"}
     </button>
   </div>
 );
@@ -175,6 +166,13 @@ const EventCard = ({ event }: { event: typeof events[0] }) => (
 const EventsPage = () => {
   const [activeMonth, setActiveMonth] = useState("Jan");
   const [search, setSearch] = useState("");
+
+  const filtered = MOCK_EVENTS.filter((e) =>
+    [e.title, e.location, e.description]
+      .join(" ")
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
   return (
     <div className="flex-1 overflow-y-auto pb-24 px-4">
@@ -187,7 +185,7 @@ const EventsPage = () => {
       <div className="relative mb-5">
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Поиск"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full bg-white border border-gray-100 rounded-2xl py-3.5 pl-4 pr-10 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition-all"
@@ -198,11 +196,12 @@ const EventsPage = () => {
       </div>
 
       <div className="flex flex-col gap-4">
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
+        {filtered.length > 0 ? (
+          filtered.map((event) => <EventCard key={event.id} event={event} />)
+        ) : (
+          <p className="text-center text-gray-400 text-sm mt-8">Ничего не найдено</p>
+        )}
       </div>
-      
     </div>
   );
 };

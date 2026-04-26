@@ -1,29 +1,30 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import type { AuthRouteState } from "../types";
+import LanguageImg from "../assets/profile_confirmation/Language.png";
 
 const EditInfo = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { name: initialName, barcode: initialBarcode, tg: initialTg } = location.state;
+  const state = (location.state ?? {}) as AuthRouteState;
+  const { name: initialName = "", barcode: initialBarcode = "", tg: initialTg = "" } = state;
 
-  const [name, setName] = useState<string>(initialName ?? "");
-  const [tg, setTg] = useState<string>(initialTg ?? "");
-  const [barcode, setBarcode] = useState<string>(initialBarcode ?? "");
+  const [name, setName] = useState(initialName);
+  const [tg, setTg] = useState(initialTg);
+  const [barcode, setBarcode] = useState(initialBarcode);
 
   const handleSubmit = () => {
     navigate("/profile-confirm", { state: { name, barcode, tg } });
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-50 min-h-screen font-['Lato',sans-serif]">
+    <div className="flex flex-col items-center bg-gray-50 min-h-screen">
       {/* Header */}
       <div className="w-full max-w-97.5 flex items-center justify-between px-4 py-3 mt-2.5 mb-5">
         <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
           <button
             className="bg-transparent border-none text-[22px] text-[#323232] cursor-pointer p-0 leading-none flex items-center justify-center"
-            onClick={() =>
-              navigate("/profile-confirm", { state: { name: initialName, barcode: initialBarcode, tg: initialTg } })
-            }
+            onClick={() => navigate("/profile-confirm", { state: { name: initialName, barcode: initialBarcode, tg: initialTg } })}
           >
             ‹
           </button>
@@ -31,11 +32,7 @@ const EditInfo = () => {
         <span className="text-xs font-semibold text-[#080808]">
           Astana <span className="text-primary">IT</span> University
         </span>
-        <img
-          src="./src/assets/profile_confirmation/Language.png"
-          alt="language"
-          className="w-9 h-9 rounded-full object-cover"
-        />
+        <img src={LanguageImg} alt="language" className="w-9 h-9 rounded-full object-cover" />
       </div>
 
       {/* Card */}
@@ -73,7 +70,7 @@ const EditInfo = () => {
 
         <button
           onClick={handleSubmit}
-          className="w-full h-12 bg-[#0088ff] text-white border-none rounded-full text-base font-light cursor-pointer"
+          className="w-full h-12 bg-primary text-white border-none rounded-full text-base font-light cursor-pointer"
         >
           Применить изменения
         </button>
