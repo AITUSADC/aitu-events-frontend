@@ -4,237 +4,96 @@ import { useLocation, useNavigate } from "react-router-dom";
 const ProfileConfirm: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-const { name, barcode } = location.state;
+  const { name, barcode } = location.state;
 
-const information = {
-  name: name,
-  barcode: barcode,
-  tg_user: "@arself",
-  lang: "Язык",
-};
+  const information = {
+    name: name,
+    barcode: barcode,
+    tg_user: "@arself",
+    lang: "Язык",
+  };
+
   return (
-    <div style={styles.container}>
+    <div className="flex flex-col items-center bg-gray-50 min-h-screen font-['Lato',sans-serif]">
       {/* Header */}
-        <div style={styles.header}>
-        <div style={styles.backBtnBg}>
-            <button style={styles.backBtn} onClick={()=> {navigate("/")}}>‹</button>
+      <div className="w-full max-w-[390px] flex items-center justify-between px-4 py-3 mt-2.5 mb-5">
+        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
+          <button
+            className="bg-transparent border-none text-[22px] text-[#323232] cursor-pointer p-0 leading-none flex items-center justify-center"
+            onClick={() => navigate("/auth", { state: { name, barcode } })}
+          >
+            ‹
+          </button>
         </div>
-        <span style={styles.headerTitle}>
-            Astana <span style={{ color: "#0088FF" }}>IT</span> University
+        <span className="text-xs font-semibold text-[#080808]">
+          Astana <span className="text-[#0088FF]">IT</span> University
         </span>
         <img
-            src="./src/assets/profile_confirmation/Language.png"
-            alt="language"
-            style={styles.flagIcon}
+          src="./src/assets/profile_confirmation/Language.png"
+          alt="language"
+          className="w-9 h-9 rounded-full object-cover"
         />
-        </div>
+      </div>
 
       {/* Card */}
-      <div style={styles.card}>
-        <h2 style={styles.title}>Почти готово!</h2>
-        <p style={styles.subtitle}>
+      <div className="bg-white rounded-3xl px-6 py-7 max-w-[360px] w-[90%] shadow-[0_4px_24px_rgba(0,0,0,0.07)]">
+        <h2 className="text-[32px] font-bold text-[#080808] mb-2.5 text-center">
+          Почти готово!
+        </h2>
+        <p className="w-full text-base text-[#474747] text-center leading-relaxed mb-6">
           Ваш профиль уже заполнен — проверьте информацию ниже. Мы автоматически
           синхронизировали ваше имя, BarCode, Telegram
         </p>
 
-        <div style={styles.fieldsWrapper}>
+        <div className="flex flex-col gap-3 mb-5">
           {/* Row 1: Name 70% | BarCode 30% */}
-          <div style={styles.row}>
-            <div style={{ ...styles.field, flex: 6 }}>
-              <span style={styles.label}>Name</span>
-              <span style={styles.value}>{information.name}</span>
+          <div className="flex flex-row gap-3">
+            {/* Name field */}
+            <div className="flex-[6] bg-[#f0f6ff] rounded-2xl p-[14px_16px] relative overflow-hidden min-h-[90px] flex flex-col justify-end">
+              <span className="text-[13px] text-[#323232] font-medium">Name</span>
+              <span className="text-base font-bold text-[#080808]">{information.name}</span>
               <img
                 src="./src/assets/profile_confirmation/Profile.png"
                 alt=""
-                style={styles.nameImage}
+                className="absolute right-0 -bottom-2.5 w-20 h-[100px]"
               />
             </div>
-            <div style={{ ...styles.field, flex: 4, backgroundColor: "#79c0ff" }}>
-              <span style={ {...styles.label, color:"#dfe0e4"}}>BarCode</span>
-              <span style={styles.valueBlue}>{information.barcode}</span>
+            {/* BarCode field */}
+            <div className="flex-[4] bg-[#79c0ff] rounded-2xl p-[14px_16px] relative overflow-hidden min-h-[90px] flex flex-col justify-end">
+              <span className="text-[13px] text-[#dfe0e4] font-medium">BarCode</span>
+              <span className="text-base font-bold text-[#f5f5f5]">{information.barcode}</span>
             </div>
           </div>
 
           {/* Row 2: Tg user 30% | Language 70% */}
-          <div style={styles.row}>
-            <div style={{ ...styles.field, flex: 4, backgroundColor: "#79c0ff" }}>
-              <span style={ {...styles.label, color:"#dfe0e4"}}>Tg user</span>
-              <span style={styles.valueBlue}>{information.tg_user}</span>
+          <div className="flex flex-row gap-3">
+            {/* Tg user field */}
+            <div className="flex-[4] bg-[#79c0ff] rounded-2xl p-[14px_16px] relative overflow-hidden min-h-[90px] flex flex-col justify-end">
+              <span className="text-[13px] text-[#dfe0e4] font-medium">Tg user</span>
+              <span className="text-base font-bold text-[#f5f5f5]">{information.tg_user}</span>
             </div>
-            <div style={{ ...styles.field, ...styles.langField, flex: 6 }}>
-              <span style={styles.value}>{information.lang}</span>
+            {/* Language field */}
+            <div className="flex-[6] bg-[#f0f6ff] rounded-2xl p-[14px_16px] relative overflow-hidden min-h-[90px] flex flex-col justify-center items-start">
+              <span className="text-base font-bold text-[#080808]">{information.lang}</span>
               <img
                 src="./src/assets/profile_confirmation/Info.png"
                 alt=""
-                style={styles.globeBlob}
+                className="absolute right-0 bottom-0 w-[75px] h-[75px]"
               />
             </div>
           </div>
         </div>
 
         {/* Buttons */}
-        <button style={styles.primaryBtn}>Все верно, продолжить</button>
-        <button style={styles.secondaryBtn}>Редактировать данные</button>
+        <button className="w-full h-12 bg-[#0088ff] text-white border-none rounded-full text-base font-light cursor-pointer mb-3">
+          Все верно, продолжить
+        </button>
+        <button className="w-full h-12 bg-[#ecedf0] text-[#374151] border-none rounded-full text-[15px] font-light cursor-pointer">
+          Редактировать данные
+        </button>
       </div>
     </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "#fafafa",
-    minHeight: "110vh",
-    fontFamily: "'Lato', sans-serif",
-  },
-  header: {
-  width: "100%",
-  maxWidth: 390,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: "12px 16px",
-  backgroundColor: "transparent",  // светло-серый как на фото
-  marginTop: 10,
-  marginBottom: 20,
-},
-backBtnBg: {
-  width: 40,
-  height: 40,
-  background: "#fff",
-  borderRadius: "50%",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  boxShadow: "0 1px 4px rgba(0,0,0,0.10)",
-},
-backBtn: {
-  background: "none",
-  border: "none",
-  fontSize: 22,
-  color: "#323232",
-  cursor: "pointer",
-  padding: 0,
-  lineHeight: 1,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-},
-headerTitle: {
-  fontSize: 12,
-  fontWeight: 600,
-  color: "#080808",
-},
-flagIcon: {
-  width: 36,
-  height: 36,
-  borderRadius: "50%",
-  objectFit: "cover",
-},
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 24,
-    padding: "28px 24px",
-    maxWidth: 360,
-    width: "90%",
-    boxShadow: "0 4px 24px rgba(0,0,0,0.07)",
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 700,
-    color: "#080808",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  subtitle: {
-    width: '100%',
-    fontSize: 16,
-    color: "#474747",
-    textAlign: "center",
-    lineHeight: 1.5,
-    marginBottom: 24,
-  },
-  fieldsWrapper: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 12,
-    marginBottom: 20,
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 12,
-  },
-  field: {
-    backgroundColor: "#f0f6ff",
-    borderRadius: 16,
-    padding: "14px 16px",
-    position: "relative",
-    overflow: "hidden",
-    minHeight: 90,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-  },
-  label: {
-    fontSize: 13,
-    color: "#323232",
-    fontWeight: 500,
-  },
-  value: {
-    fontSize: 16,
-    fontWeight: 700,
-    color: "#080808",
-  },
-  valueBlue: {
-    fontSize: 16,
-    fontWeight: 700,
-    color: "#f5f5f5",
-  },
-  nameImage: {
-    position: "absolute",
-    right: 0,
-    bottom: -10,
-    width: 80,
-    height: 100,
-  },
-  langField: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  globeBlob: {
-    position: "absolute",
-    right: 0,
-    bottom: 0,
-    width: 75,
-    height: 75,
-  },
-  primaryBtn: {
-    width: "100%",
-    backgroundColor: "#0088ff",
-    color: "#fff",
-    border: "none",
-    borderRadius: 50,
-    fontSize: 16,
-    fontWeight: 300,
-    cursor: "pointer",
-    marginBottom: 12,
-    height: "48px"
-  },
-  secondaryBtn: {
-    width: "100%",
-    padding: "14px",
-    backgroundColor: "#ecedf0",
-    color: "#374151",
-    border: "none",
-    borderRadius: 50,
-    fontSize: 15,
-    fontWeight: 300,
-    cursor: "pointer",
-    height: "48px"
-  },
 };
 
 export default ProfileConfirm;

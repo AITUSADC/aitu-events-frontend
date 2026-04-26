@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Authorization = () => {
-  const [name, setName] = useState("");
-  const [barcode, setBarcode] = useState("");
+  const location = useLocation();
+  const [name, setName] = useState(location.state?.name || "");
+  const [barcode, setBarcode] = useState(location.state?.barcode || "");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
